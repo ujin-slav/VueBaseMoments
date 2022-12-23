@@ -1,13 +1,20 @@
 <script lang="ts">
   import { defineComponent, PropType } from "vue"
+  import PostForm from '../components/PostForm.vue'
+  import PostList from '../components/PostList.vue'
+import MyButton from "./MyButton.vue"
 
-  declare type IPost = {
+  export type IPost = {
     id:number,
     title:string,
     body:string
   }
 
   export default defineComponent({
+    components:{
+      PostForm,PostList,
+        MyButton
+    },
     data() {
       return {
         likes: 0,
@@ -16,7 +23,9 @@
           {id:1,title:"Заголовок",body:"Тело поста"},
           {id:2,title:"Заголовок",body:"Тело поста"},
           {id:3,title:"Заголовок",body:"Тело поста"}
-        ] as IPost[]
+        ] as IPost[],
+        title:'',
+        body:''
       }
     },
     methods: {
@@ -24,7 +33,10 @@
         this.likes += 1
       },
       addDislike(e: Event) {
-        this.dislikes -= 1
+        this.dislikes += 1
+      },
+      addPost(newPost:any) {
+            console.log(newPost)
       }
     },
   })
@@ -35,11 +47,12 @@
   <button @click="addDislike">-</button>
   <h1>Количество лайков {{ likes }}</h1>
   <h1>Количество диз лайков {{ dislikes }}</h1>
-  <div v-for="post in posts">
-    <div>{{ post.id }}</div>
-    <div>{{ post.title }}</div>
-    <div>{{ post.body }}</div>
-  </div>
+  <post-form v-bind:posts="posts" @addPost="addPost"></post-form>
+  <post-list v-bind:posts="posts"></post-list>
+  <my-button>
+    <template v-slot:header>Одно</template>
+    <template v-slot:footer>Другое</template>
+  </my-button>
 </template>
 
 <style scoped>

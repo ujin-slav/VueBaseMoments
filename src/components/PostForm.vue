@@ -2,11 +2,11 @@
     <div>
         <div>
             Заголовок
-            <input v-model="post.title"/>
+            <my-input v-model="post.title"/>
         </div>
         <div>
             Тело
-            <input v-model="post.body"/>
+            <my-input v-model="post.body"/>
   </div>
   <button @click="addPost">Добавить</button>
    </div>

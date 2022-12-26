@@ -36,6 +36,7 @@
         modalActive: false,
         searchText:"",
         selectedSort:'',
+        page:1,
         posts: [] as IPost[],
         sorts: [
           {id:'1',value:"title",title:'По заголовку'},
@@ -66,11 +67,11 @@
           this.loading = true
           const response = await axios.get('https://jsonplaceholder.typicode.com/posts', {
           params: {
-            _page: 1,
+            _page: this.page,
             _limit: 10
           }
           });
-          this.posts = response.data
+          this.posts = [...this.posts,...response.data]
           this.loading = false
         } catch (error) {
           alert(error)
@@ -86,9 +87,34 @@
         //     case 'body':  
         //       this.posts = this.posts.sort(dynamicSort("body"))
         //   }
-      }},
+      },
+      scrollHandler(e:any){
+        if((e.target.documentElement.scrollHeight - 
+            (e.target.documentElement.scrollTop + window.innerHeight) <= 0)) {
+                ++this.page
+          }
+      },},
+      created() {
+        document.addEventListener('scroll',this.scrollHandler);
+      },
+      destroyed() {
+        document.addEventListener('scroll',this.scrollHandler);
+      },
       mounted(){
+        console.log(window)
         this.fetchPosts()
+        // let options = {
+        //   rootMargin: '0px',
+        //   threshold: 1.0
+        // }
+        // const callback = (entries, observer) => {
+        //   console.log('call back')
+        //   if (entries[0].isIntersecting && this.page < this.totalPages) {
+        //     ++this.page
+        //   }
+        // };
+        // let observer= new IntersectionObserver(callback, options)
+        // observer.observe(this.$refs.observer)
       },
       computed:{
         sortedPost(){
@@ -104,6 +130,11 @@
       //     })
       //   },
       // }
+      watch:{
+        page(newValue) {
+          this.fetchPosts()
+        },
+      }
   })
 </script>
 
@@ -124,8 +155,10 @@
       {{ sort.title }}
     </option>
   </select>
-  <post-list v-if="!loading" v-bind:posts="sortedPost" @remove="remove"></post-list>
-  <div v-else>Загрузка</div>
+  <!-- <post-list v-if="!loading" v-bind:posts="sortedPost" @remove="remove"></post-list>
+  <div v-else>Загрузка</div> -->
+  <post-list ref="posList" v-bind:posts="sortedPost" @remove="remove"></post-list>
+  <div ref="observer" class="observer"></div>
   <my-button>
     <template v-slot:header>Одно</template>
     <template v-slot:footer>Другое</template>
@@ -137,4 +170,8 @@
 </template>
 
 <style scoped>
+.observer{
+  height:30px;
+  background-color: aqua;
+}
 </style>

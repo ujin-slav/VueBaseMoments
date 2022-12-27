@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import NavBarVue from "./components/NavBar.vue";
+import NavBar from "./components/NavBar.vue";
 
   components:{
-    NavBarVue
+    NavBar
   }
 </script>
 
 <template>
   <div class="app">
-    <navbar></navbar>
+    <nav-bar/>
     <router-view></router-view>
   </div>
 </template>
@@ -20,6 +20,5 @@ import NavBarVue from "./components/NavBar.vue";
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 160px;
 }
 </style>

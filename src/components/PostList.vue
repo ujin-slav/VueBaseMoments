@@ -1,7 +1,10 @@
 <template>
     <div v-if="posts.length > 0">
         <transition-group tag="div" name="list">
-            <div v-for="post in posts" :key="post.id" class="listItem">
+            <div 
+              v-for="post in posts" 
+              :key="post.id" 
+              class="listItem">
                 <div>{{ post.id }}</div>
                 <div>{{ post.title }}</div>
                 <div>{{ post.body }}</div>

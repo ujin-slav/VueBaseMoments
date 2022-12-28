@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-intersection:[direction]='565565656'></div>
+        <div></div>
          {{$route.params.id }}
     </div>
 </template>

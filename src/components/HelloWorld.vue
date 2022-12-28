@@ -95,13 +95,13 @@
           }
       },},
       created() {
-        document.addEventListener('scroll',this.scrollHandler);
+        //document.getElementById("postList").addEventListener('scroll',this.scrollHandler)
+        //document.addEventListener('scroll',this.scrollHandler);
       },
       destroyed() {
-        document.addEventListener('scroll',this.scrollHandler);
+        document.removeEventListener('scroll',this.scrollHandler);
       },
       mounted(){
-        console.log(window)
         this.fetchPosts()
         // let options = {
         //   rootMargin: '0px',
@@ -157,8 +157,8 @@
   </select>
   <!-- <post-list v-if="!loading" v-bind:posts="sortedPost" @remove="remove"></post-list>
   <div v-else>Загрузка</div> -->
-  <post-list ref="posList" v-bind:posts="sortedPost" @remove="remove"></post-list>
-  <div ref="observer" class="observer"></div>
+  <post-list v-bind:posts="sortedPost" @remove="remove"></post-list>
+  <div ref="observer" class="observer" v-intersection="fetchPosts"></div>
   <my-button>
     <template v-slot:header>Одно</template>
     <template v-slot:footer>Другое</template>

@@ -1,4 +1,4 @@
-import VIntersections from './VIntersection.js.js'
+import VIntersections from './VIntersection'
 
 export default [
     VIntersections

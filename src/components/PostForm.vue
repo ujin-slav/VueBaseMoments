@@ -2,7 +2,7 @@
     <div>
         <div>
             Заголовок
-            <my-input v-model="post.title"/>
+            <my-input v-model="post.title" v-focus/>
         </div>
         <div>
             Тело

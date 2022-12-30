@@ -4,6 +4,7 @@
   import PostList from '../components/PostList.vue'
   import axios from 'axios'
   import { switchCase } from "@babel/types"
+  import {mapState, mapGetters, mapActions, mapMutations} from 'vuex'
 
 
   export type IPost = {
@@ -88,6 +89,9 @@
         //       this.posts = this.posts.sort(dynamicSort("body"))
         //   }
       },
+      ...mapActions({
+        loadMorePosts: 'GET_POSTS',
+      }),
       scrollHandler(e:any){
         if((e.target.documentElement.scrollHeight - 
             (e.target.documentElement.scrollTop + window.innerHeight) <= 0)) {
@@ -102,7 +106,7 @@
         document.removeEventListener('scroll',this.scrollHandler);
       },
       mounted(){
-        this.$store.dispatch('GET_POSTS')
+        this.loadMorePosts()
       },
       computed:{
         // sortedPost(){
@@ -110,10 +114,12 @@
         //       return post1[this.selectedSort]?.localeCompare(post2[this.selectedSort])
         //   }).filter((item)=>item.body.toLowerCase().includes(this.searchText.toLowerCase()))
         // },
-        sortedPost(){
-            console.log(this.$store.getters.POSTS)
-          return this.$store.getters.POSTS
-        },
+        // sortedPost(){
+        //   return this.$store.getters.POSTS
+        // },
+        ...mapGetters({
+          sortedPost: 'POSTS',
+        })
       },
       // watch:{
       //   selectedSort(value) {

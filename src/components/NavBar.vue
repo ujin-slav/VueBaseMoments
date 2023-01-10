@@ -10,6 +10,7 @@
               <b-nav-item href="#"><router-link to="/About">About</router-link></b-nav-item>
               <button @click="$router.push('/About')">About</button>
               <button @click="$router.push('/store')">Store</button>
+              <button @click="$router.push('/composition')">Composition</button>
             </b-navbar-nav>
           </b-collapse>
         </b-navbar>

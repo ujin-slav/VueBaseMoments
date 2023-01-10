@@ -5,7 +5,7 @@
   import axios from 'axios'
   import { switchCase } from "@babel/types"
   import {mapState, mapGetters, mapActions, mapMutations} from 'vuex'
-
+  import IState from '../store/index'
 
   export type IPost = {
     id:number,
@@ -118,7 +118,7 @@
         //   return this.$store.getters.POSTS
         // },
         ...mapGetters({
-          sortedPost: 'POSTS',
+          getPost: 'getPost',
         })
       },
       // watch:{
@@ -137,6 +137,7 @@
 </script>
 
 <template>
+  {{getPost.title}}
   <my-button @click="addLike">+</my-button>
   <my-button @click="addDislike">-</my-button>
   <my-button @click="showModal">Добавить</my-button>
@@ -155,7 +156,7 @@
   </select>
   <!-- <post-list v-if="!loading" v-bind:posts="sortedPost" @remove="remove"></post-list>
   <div v-else>Загрузка</div> -->
-  <post-list v-bind:posts="sortedPost" @remove="remove"></post-list>
+  <post-list v-bind:posts="storePosts" @remove="remove"></post-list>
   <div ref="observer" class="observer" v-intersection="fetchPosts"></div>
   <my-button>
     <template v-slot:header>Одно</template>

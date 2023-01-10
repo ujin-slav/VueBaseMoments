@@ -1,17 +1,31 @@
 import Vuex from 'vuex'
 import {IPost} from '../components/HelloWorld.vue'
 import axios from 'axios'
+import { GetterTree } from 'vuex'
+
+export interface RootState {
+  posts: any [];
+}
+const getters: GetterTree<RootState, RootState> = {
+  getPost(state): IPost {
+      return {
+        id:1,
+        title:'Hello',
+        body:'body'
+      }
+}}
 
 // Create a new store instance.
-const store = new Vuex.Store({
-  state : {
+const store = new Vuex.Store<RootState>({
+  state: {
     posts: []
   },
-  getters : {
-    POSTS : state => {
-      return state.posts;
-    }
-  },
+  // getters : {
+  //   POSTS : state => {
+  //     return state.posts;
+  //   }
+  // },
+  getters: getters,
   mutations: {
     ADD_POSTS : (state,payload) => {
       state.posts = [...state.posts,...payload]
